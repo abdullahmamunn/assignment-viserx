@@ -17,9 +17,9 @@ class ProductController extends Controller
         $products =  Product::all();
         if($request->ajax()){
             return response()->json($products);
-       }
-    //    return view('user.profile',compact('user','tickets'));
-         return view('product.view');
+        }
+
+        return view('product.view');
     }
 
     /**
@@ -75,7 +75,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = Product::findOrFail($id);
+        return response()->json($edit,200);
     }
 
     /**
@@ -87,7 +88,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request->all();
+        $request->validate([
+            'name' => 'required|unique:products,name,'.$id
+        ]);
+
+        $product = Product::findOrfail($id);
+        if(!$product){
+            return response()->json(['msg'=>'Data not found'], 404);
+        }
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->save();
+
+        return response()->json(['msg'=>'Product Update Successfully'],200);
     }
 
     /**
@@ -98,6 +114,27 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $product = Product::findOrFail($id);
+         if(!$product){
+            return response()->json(['msg'=>'Data not found'], 404);
+        }
+
+        $product->delete();
+        return response()->json(['msg' => 'Product delete successfully!'], 200);
+    }
+
+    public function filterProduct(Request $request)
+    {
+         if($request->ajax()){
+            // return $request->all();
+            if(isset($request->sort) and $request->sort === 'low_to_high'){
+                return Product::get()->pluck('price');
+            }else if(isset($request->sort) and $request->sort === 'high_to_low'){
+                return $request->sort;
+            }else if(isset($request->sort) and $request->sort === 'desc'){
+                return $request->sort;
+            }
+         }
     }
 }
+

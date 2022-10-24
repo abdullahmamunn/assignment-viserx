@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,12 @@ Route::middleware(['UserAuthCheck'])->group(function (){
 });
 
 Route::resource('product', ProductController::class);
+
+Route::post('filter',[ProductController::class,'filterProduct'])->name('product.filter');
+
+// Route::get('ajax',[TeacherController::class,'index']);
+// Route::get('ajax/get-all',[TeacherController::class,'getData']);
+// Route::post('ajax/create-new-teacher',[TeacherController::class,'createTeacher']);
+// Route::get('ajax/edit-teacher/{id}',[TeacherController::class,'editTeacher']);
+// Route::post('ajax/update-teacher/{id}',[TeacherController::class,'updateTeacher']);
+// Route::get('ajax/delete/{id}',[TeacherController::class,'deleteTeacher']);

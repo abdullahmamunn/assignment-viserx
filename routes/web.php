@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\Settings\RolePermission;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,21 @@ Route::middleware(['UserAuthCheck'])->group(function (){
         Route::resource('product', ProductController::class);
         Route::post('filter',[ProductController::class,'filterProduct'])->name('product.filter');
 
+        // assign role to users
+        Route::get('assign-role',[RolePermission::class, 'assignRole'])->name('user.assign.role');
+        Route::get('assign-role/{id}',[RolePermission::class, 'assignUserRole'])->name('assign.role');
+        Route::get('user-role-store',[RolePermission::class, 'userRoleStore'])->name('user.role.store');
+
+        // assign permission
+        Route::get('assign-route',[RolePermission::class, 'assignRoute'])->name('user.assign.route');
+        Route::get('user.route.store',[RolePermission::class, 'userRouteStore'])->name('user.route.store');
+
+        // insert dataset to product
+        Route::get('insert-data',[ProductController::class, 'Dataset'])->name('insert.data');
+        // Route::get('truncate-data',[ProductController::class, 'Dataset'])->name('insert.data');
+
     });
 });
+
+
 

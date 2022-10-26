@@ -9,11 +9,13 @@
                  <form name="sortProducts" id="sortProducts">
                     <input type="hidden" name="url" id="url" value="{{route('product.filter')}}">
                     <select id="sort" name="sort">
-                       <option value="default">Default</option>
+                       <option value="">Select</option>
                        <option value="low_to_high">Price: Low to High</option>
                        <option value="high_to_low">Price: High to Low</option>
                        <option value="asc">Sort: ASC</option>
                        <option value="desc">Sort: DESC</option>
+                       <option value="active">Sort: Active</option>
+                       <option value="inactive">Sort: Inactive</option>
                     </select>
                  </form>
              </div>
@@ -179,7 +181,7 @@
        });
    }
    function deleteData(id) {
-    alert(id);
+    // alert(id);
     $.ajax({
         type: 'DELETE',
         dataType: 'json',

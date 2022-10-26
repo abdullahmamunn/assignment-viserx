@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'UserAuthCheck' => \App\Http\Middleware\UserAuthCheck::class,
         'Permission' => \App\Http\Middleware\Permission::class,
+        'makeResponse' => \App\Http\Middleware\ForJsonResponse::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

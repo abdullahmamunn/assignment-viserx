@@ -140,7 +140,41 @@ class ProductController extends Controller
                 $desc = Product::orderBy('name','desc')->get();
                 return response()->json($desc);
             }
+            else if(isset($request->sort) and $request->sort === 'active'){
+                $active = Product::where('status',1)->get();
+                return response()->json($active);
+            }
+            else if(isset($request->sort) and $request->sort === 'inactive'){
+                $inactive = Product::where('status',0)->get();
+                return response()->json($inactive);
+            }
          }
+    }
+
+    public function Dataset()
+    {
+        // return "ok";
+        $dataset = [
+            ['name'=>'Book', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>10.50],
+            ['name'=>'Cat', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>100.50],
+            ['name'=>'Alpine', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>50.50],
+            ['name'=>'Speaker', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>11.150],
+            ['name'=>'keyboard', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>220.50],
+            ['name'=>'Mouse', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>45.50],
+            ['name'=>'Desktop', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>225.50],
+            ['name'=>'Marvel', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>150.00],
+            ['name'=>'Laptop', 'description'=> 'Lorem ipslum dolor sit amet.', 'price'=>500],
+            ['name'=>'Mobile', 'description'=> 'Lorem ipsum dolor sit amet.', 'price'=>200.50],
+
+        ];
+        try {
+            product::truncate();
+            Product::insert($dataset);
+            return "Product data Inserted";
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 }
 

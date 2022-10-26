@@ -1,4 +1,4 @@
-@extends('auth.app')
+@extends('layouts.app')
 @section('content')
 <main class="login-form">
     <div class="cotainer">
@@ -8,12 +8,12 @@
                     @if (Session::has('key'))
                     <div class="alert alert-{{Session::get('key')}}" role="alert">
                        You must login!
-                    </div> 
+                    </div>
                     @endif
                     @if (Session::has('error'))
                     <div class="alert alert-danger" role="alert">
-                        {{Session::get('error')}} 
-                    </div> 
+                        {{Session::get('error')}}
+                    </div>
                     @endif
                     <h3 class="card-header text-center">Login</h3>
                     <div class="card-body">

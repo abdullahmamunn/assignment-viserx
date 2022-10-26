@@ -9,10 +9,11 @@
                  <form name="sortProducts" id="sortProducts">
                     <input type="hidden" name="url" id="url" value="{{route('product.filter')}}">
                     <select id="sort" name="sort">
-                       <option value="default" @if (request()->sort == "product_relevance") selected @endif>Relevance</option>
-                       <option value="low_to_high" @if (request()->sort == "product_price_low_high") selected @endif>Price: Low to High</option>
-                       <option value="high_to_low" @if (request()->sort == "product_price_high_low") selected @endif>Price: High to Low</option>
-                       <option value="desc" @if (request()->sort == "product_latest") selected @endif>Latest Arrivals</option>
+                       <option value="default">Default</option>
+                       <option value="low_to_high">Price: Low to High</option>
+                       <option value="high_to_low">Price: High to Low</option>
+                       <option value="asc">Sort: ASC</option>
+                       <option value="desc">Sort: DESC</option>
                     </select>
                  </form>
              </div>
@@ -38,7 +39,7 @@
           <div class="card">
               <div class="card-header">
                  <span id="addProduct">Add new</span>
-                 <span id="updateProduct">Update Teacher</span>
+                 <span id="updateProduct">Update Product</span>
               </div>
               <div class="card-body">
                   <div class="form-group">
@@ -85,6 +86,7 @@
             dataType: 'json',
             url: "{{route('product.index')}}",
             success:function (response) {
+                console.log(response);
                 var data = '';
                 $.each(response,function (key, value) {
                     data = data + "<tr>"
@@ -191,15 +193,28 @@
 $("#sort").on('change', function(){
     var sort = $(this).val();
     var url = $('#url').val()
-    console.log(url);
         $.ajax({
         url: url,
         method: "post",
         data: {sort:sort},
-            success: function(data){
-                console.log(data);
-            // $('.filter_products').html(data);
+        success: function(response){
+            console.log(response);
+            var data = '';
+                $.each(response,function (key, value) {
+                    data = data + "<tr>"
+                        data = data + "<td>"+ (key+=1) +"</td>"
+                        data = data + "<td>"+ value.name +"</td>"
+                        data = data + "<td>"+ value.description +"</td>"
+                        data = data + "<td>"+ value.price +"</td>"
+                        data = data + "<td style='width: 120px'>"
+                        data = data + " <a href=\"javascript:void(0)\" class=\"btn btn-primary mr-2\" onclick=\"editData("+value.id+")\"><i class=\"fas fa-edit\"></i></a>"
+                        data = data + "<a href=\"javascript:void(0)\" class=\"btn btn-danger\" onclick=\"deleteData("+value.id+")\"><i class=\"fas fa-trash\"></i></a>"
+                        data = data + "</td>"
+                    data = data + "</tr>"
+                });
+             $('tbody').html(data);
         }
+
     })
 });
 </script>

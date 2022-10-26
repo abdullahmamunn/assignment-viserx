@@ -1,4 +1,4 @@
-@extends('auth.app')
+@extends('layouts.app')
 @section('content')
 <main class="signup-form">
     <div class="cotainer">
@@ -7,8 +7,8 @@
                 <div class="card">
                     @if (Session::has('fail'))
                     <div class="alert alert-danger" role="alert">
-                        {{Session::get('fail')}} 
-                      </div> 
+                        {{Session::get('fail')}}
+                      </div>
                     @endif
                     <h3 class="card-header text-center">Register User</h3>
                     <div class="card-body">

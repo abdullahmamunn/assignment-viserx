@@ -1,0 +1,8 @@
+1. User type-based authentication system using passport (REST API).
+2. User login with email, phone, username, and password (single field for email, phone, or username).
+3. Product management system (only CRUD using laravel resource route and use Dependency injection properly).
+4. Products should have variations (design the database in your own way).
+5. Perform all crud operations with ajax.
+6. Product filter with a price range, ASC/DESC, active/inactive from the product table (with a single method).
+7. Create a dataset of ten products and insert or update it with one query. Also, share the dataset with us.
+8. User crud role permission on the product (according to permission users will be able to perform specified CRUD operations).

@@ -128,11 +128,17 @@ class ProductController extends Controller
          if($request->ajax()){
             // return $request->all();
             if(isset($request->sort) and $request->sort === 'low_to_high'){
-                return Product::get()->pluck('price');
+                $low_to_high = Product::orderBy('price','ASC')->get();
+                return response()->json($low_to_high);
             }else if(isset($request->sort) and $request->sort === 'high_to_low'){
-                return $request->sort;
+                $high_to_low = Product::orderBy('price','DESC')->get();
+                return response()->json($high_to_low);
+            }else if(isset($request->sort) and $request->sort === 'asc'){
+                $asc = Product::orderBy('name','asc')->get();
+                return response()->json($asc);
             }else if(isset($request->sort) and $request->sort === 'desc'){
-                return $request->sort;
+                $desc = Product::orderBy('name','desc')->get();
+                return response()->json($desc);
             }
          }
     }

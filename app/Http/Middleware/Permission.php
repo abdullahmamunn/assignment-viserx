@@ -21,9 +21,7 @@ class Permission
     public function handle(Request $request, Closure $next)
     {
         $route = $request->route()->getName();
-        // dd($route);
         $user_role_array = Auth::user()->user_role;
-
         $title = Menu::where('route',$route)->first();
 
         if(isset($user_role_array) && count($user_role_array)>0){
@@ -37,27 +35,18 @@ class Permission
         // dd($user_role);
 
         if(Auth::user()->id =='1'){
-            $request->session()->put('title',@$title->name);
             return $next($request);
         }else{
             $mainmenu = Menu::where('route',$route)->first();
-            // dd($mainmenu);
-            // $mainmenuroute = MenuRoute::with(['menu'])->where('route',$route)->first();
             if($mainmenu != null){
-                $permission=MenuPermission::whereIn('role_id',$user_role)->where('permitted_route',$route)->first();
-                // dd($permission);
+                $permission = MenuPermission::whereIn('role_id',$user_role)->where('permitted_route',$route)->first();
                 if($permission){
-                    $request->session()->put('title',@$title->name);
                     return $next($request);
                 }else{
-                    $request->session()->put('title',@$title->name);
                     return redirect()->back()->with('error','Access Permission Denied');
                 }
             }else{
-                $request->session()->put('title',@$title->name);
                 return redirect()->back()->with('error','Access Permission Denied');
-                // $request->session()->put('title',@$title->name);
-                // return $next($request);
             }
         }
 

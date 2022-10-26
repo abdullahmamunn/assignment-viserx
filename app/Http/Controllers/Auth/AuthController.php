@@ -30,8 +30,6 @@ class AuthController extends Controller
            'password' => 'required|confirmed|min:6'
        ]);
 
-    //    $data = $request->except('_token','password_confirmation');
-
        User::create([
         'name' => $request->name,
         'email' => $request->email,
@@ -43,40 +41,18 @@ class AuthController extends Controller
 
     public function UserLoginFormSubmit(Request $request)
     {
-        // return $request->all();
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
 
-        // Custom guard
-
-        // dd(Auth::guard('user_info')->attempt($request->only(['email','password'])));
-
-        // if(Auth::guard('user_info')->attempt($request->only(['email','password']))){
-        //     echo "ok";
-        //     die();
-        //    return redirect()->intended('dashboard');
-
-        // }
         $user_credentials = $request->only('email','password');
-        // dd(Auth::attempt($user_credentials));
 
-       if(Auth::attempt($user_credentials)){
-           return redirect()->route('dashboard')->with('success','Login successfull, Mr.');
-       }
-       return redirect()->route('login')->with('error','Your credential doesnot match');
-
-
-  }
-
-public function getData()
-{
-    $users = User::all();
-    return view('get-data',compact('users'));
-}
-
-
+        if(Auth::attempt($user_credentials)){
+            return redirect()->route('dashboard')->with('success','Login successfull, Mr.');
+        }
+        return redirect()->route('login')->with('error','Your credential doesnot match');
+    }
 
     public function dashboard()
     {
